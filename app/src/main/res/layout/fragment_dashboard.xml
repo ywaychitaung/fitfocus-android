@@ -1,14 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DashboardFragment">
+    android:orientation="vertical"
+    android:padding="64dp">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/caloriesText"
+        android:text="Calories -"
+        android:layout_marginBottom="32dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Dashboard" />
+        android:layout_height="wrap_content" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/sleepHoursText"
+        android:text="Sleep Hours -"
+        android:layout_marginBottom="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/waterConsumptionText"
+        android:text="Water Consumption -"
+        android:layout_marginBottom="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/bmiText"
+        android:text="BMI -"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.team10nus.android;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,12 +9,16 @@ import android.os.Bundle;
 import com.team10nus.android.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
     ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Fit Focus");
+        }
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
+
     }
 
     private void replaceFragment(Fragment fragment) {
