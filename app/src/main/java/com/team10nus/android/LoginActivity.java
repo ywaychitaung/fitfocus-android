@@ -17,6 +17,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -52,27 +54,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void userLogin(String email, String password) {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-
         OkHttpClient client = SSLHelper.getUnsafeOkHttpClient(LoginActivity.this);
 
-        JSONObject loginForm = new JSONObject();
-        try {
-            loginForm.put("email", email);
-            loginForm.put("password", password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return;
-        }
+        // Building the request body
+        String formBody = "email=" + encodeURIComponent(email) +
+                "&password=" + encodeURIComponent(password);
 
-        RequestBody body = RequestBody.create(loginForm.toString(),
-                MediaType.parse("application/json; charset=utf-8"));
+        RequestBody body = RequestBody.create(formBody, MediaType.parse("application/x-www-form-urlencoded"));
 
         Request request = new Request.Builder()
                 .url("https://10.0.2.2:8080/api/auth/login") // Use 10.0.2.2 for Android emulator
                 .post(body)
                 .build();
+
 
         new Thread(new Runnable() {
             @Override
@@ -106,4 +100,19 @@ public class LoginActivity extends AppCompatActivity {
         }).start();
     }
 
+    // Helper method to URL-encode strings
+    private String encodeURIComponent(String s) {
+        try {
+            return URLEncoder.encode(s, "UTF-8")
+                    .replaceAll("\\+", "%20")
+                    .replaceAll("\\%21", "!")
+                    .replaceAll("\\%27", "'")
+                    .replaceAll("\\%28", "(")
+                    .replaceAll("\\%29", ")")
+                    .replaceAll("\\%7E", "~");
+        } catch (UnsupportedEncodingException e) {
+            Log.e("Encoding Error", "Error encoding parameter", e);
+            return null;
+        }
+    }
 }

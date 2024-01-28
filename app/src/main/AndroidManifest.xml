@@ -2,8 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Internet permission -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- Camera permission -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- Indicate that the camera feature is used, but not required -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Camera permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Indicate that the camera feature is used, but not required -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -33,11 +37,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
