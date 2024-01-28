@@ -5,28 +5,28 @@
     android:padding="64dp">
 
     <TextView
-        android:id="@+id/caloriesText"
+        android:id="@+id/caloriesTextView"
         android:text="Calories -"
         android:layout_marginBottom="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/sleepHoursText"
+        android:id="@+id/sleepHoursTextView"
         android:text="Sleep Hours -"
         android:layout_marginBottom="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/waterConsumptionText"
+        android:id="@+id/waterConsumptionTextView"
         android:text="Water Consumption -"
         android:layout_marginBottom="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/bmiText"
+        android:id="@+id/bmiTextView"
         android:text="BMI -"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
