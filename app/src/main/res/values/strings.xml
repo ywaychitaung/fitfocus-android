@@ -2,4 +2,11 @@
     <string name="app_name">Fit Focus</string>
     <string name="sleep_hours">Sleep Hours: %1$d Hours</string>
     <string name="water_consumption">Water Consumption: %1$d Liters</string>
+
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="welcome_message">Welcome to Fitness App!</string>
+    <string name="description_message">
+        Fit Focus, the ultimate fitness app that caters to all your health and wellness needs. Whether you are embarking on a new fitness journey or are a seasoned athlete, Fit Focus is designed to help you reach your goals with confidence and ease.
+    </string>
 </resources>
