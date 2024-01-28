@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Fit Focus</string>
-    <string name="sleep_hours">Sleep Hours: %1$d</string>
-    <string name="water_consumption">Water Consumption: %1$d</string>
+    <string name="sleep_hours">Sleep Hours: %1$d Hours</string>
+    <string name="water_consumption">Water Consumption: %1$d Liters</string>
 </resources>
