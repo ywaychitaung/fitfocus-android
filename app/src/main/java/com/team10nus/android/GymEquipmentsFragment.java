@@ -18,10 +18,10 @@ import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ExerciseFragment#newInstance} factory method to
+ * Use the {@link GymEquipmentsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ExerciseFragment extends Fragment {
+public class GymEquipmentsFragment extends Fragment {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_CAMERA_PERMISSION = 2;
 
@@ -34,7 +34,7 @@ public class ExerciseFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ExerciseFragment() {
+    public GymEquipmentsFragment() {
         // Required empty public constructor
     }
 
@@ -47,8 +47,8 @@ public class ExerciseFragment extends Fragment {
      * @return A new instance of fragment ExerciseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ExerciseFragment newInstance(String param1, String param2) {
-        ExerciseFragment fragment = new ExerciseFragment();
+    public static GymEquipmentsFragment newInstance(String param1, String param2) {
+        GymEquipmentsFragment fragment = new GymEquipmentsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,14 +69,14 @@ public class ExerciseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_exercise, container, false);
+        return inflater.inflate(R.layout.fragment_gym_equipments, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button button = view.findViewById(R.id.button_open_camera);
+        Button button = view.findViewById(R.id.button_foods_camera);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

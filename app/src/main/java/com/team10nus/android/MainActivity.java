@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new DashboardFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.dashboard) {
+            if (item.getItemId() == R.id.icon_dashboard) {
                 replaceFragment(new DashboardFragment());
-            } else if (item.getItemId() == R.id.food) {
-                replaceFragment(new FoodFragment());
-            } else if (item.getItemId() == R.id.exercise) {
-                replaceFragment(new ExerciseFragment());
-            } else if (item.getItemId() == R.id.settings) {
+            } else if (item.getItemId() == R.id.icon_foods) {
+                replaceFragment(new FoodsFragment());
+            } else if (item.getItemId() == R.id.icon_gym_equipments) {
+                replaceFragment(new GymEquipmentsFragment());
+            } else if (item.getItemId() == R.id.icon_settings) {
                 replaceFragment(new SettingsFragment());
             }
 
