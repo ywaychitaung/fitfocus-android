@@ -54,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void userLogin(String email, String password) {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+
         OkHttpClient client = SSLHelper.getUnsafeOkHttpClient(LoginActivity.this);
 
         // Building the request body
