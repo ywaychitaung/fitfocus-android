@@ -11,11 +11,12 @@
         app:flexDirection="row"
         app:justifyContent="space_between">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="54dp"
-            android:layout_height="59dp"
-            android:src="@drawable/icon_person" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/fitfocus_transparent" />
 
         <com.google.android.flexbox.FlexboxLayout
             android:layout_width="wrap_content"
@@ -32,12 +33,11 @@
                 android:text="Hello 👋🏻" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/nameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="Yway Chit Aung" />
+                android:textStyle="bold" />
         </com.google.android.flexbox.FlexboxLayout>
     </com.google.android.flexbox.FlexboxLayout>
 
@@ -48,7 +48,8 @@
         android:layout_height="wrap_content"
         app:flexDirection="row"
         app:justifyContent="space_between"
-        app:alignItems="center">
+        app:alignItems="center"
+        android:paddingHorizontal="16dp">
 
         <com.google.android.flexbox.FlexboxLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -66,7 +67,7 @@
                 android:layout_marginBottom="8dp" />
 
             <TextView
-                android:id="@+id/caloriesEatenTextView"
+                android:id="@+id/foodCaloriesConsumedTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="400" />
@@ -79,7 +80,7 @@
             android:gravity="center">
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/caloriesProgressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -89,7 +90,7 @@
                 android:progressDrawable="@drawable/circular" />
 
             <TextView
-                android:id="@+id/progressText"
+                android:id="@+id/caloriesProgressTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -107,14 +108,13 @@
             app:alignItems="center">
 
             <TextView
-                android:id="@+id/caloriesBurnTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Burned"
                 android:layout_marginBottom="8dp" />
 
             <TextView
-                android:id="@+id/TextView"
+                android:id="@+id/exerciseCaloriesBurnedTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="400" />
@@ -123,93 +123,212 @@
 
     </com.google.android.flexbox.FlexboxLayout>
 
-    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:columnCount="2"
-        android:rowCount="2"
+        android:layout_height="246dp"
         android:alignmentMode="alignMargins"
-        android:columnOrderPreserved="false">
+        android:columnCount="2"
+        android:columnOrderPreserved="false"
+        android:padding="16dp"
+        android:rowCount="2">
 
-        <!-- Card 1 -->
+        <!-- Card 1 - Sleep -->
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:elevation="4dp">
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:elevation="4dp"
+            android:radius="16dp">
 
-            <!-- Content inside the card, e.g., ImageView or TextView -->
-            <!-- ... -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <!-- Sleep Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/icon_sleep" />
+
+                <!-- Text Content -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sleep"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/sleepHoursTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6 hours"
+                        android:textColor="#212121"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Card 2 -->
+        <!-- Card 2 - Water -->
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:elevation="4dp">
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:elevation="4dp"
+            android:radius="16dp">
 
-            <!-- Content inside the card -->
-            <!-- ... -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <!-- Water Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/icon_water" />
+
+                <!-- Text Content -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Water"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/waterConsumptionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 liters"
+                        android:textColor="#212121"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Card 3 -->
+        <!-- Card 3 - BMI -->
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:elevation="4dp">
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:elevation="4dp"
+            android:radius="16dp">
 
-            <!-- Content inside the card -->
-            <!-- ... -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <!-- Heart Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/icon_bmi" />
+
+                <!-- Text Content -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BMI"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/bmiTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="120"
+                        android:textColor="#212121"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Card 4 -->
+        <!-- Card 4 - Exercises -->
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:elevation="4dp">
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:elevation="4dp"
+            android:radius="16dp">
 
-            <!-- Content inside the card -->
-            <!-- ... -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <!-- Heart Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/icon_exercise" />
+
+                <!-- Text Content -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Exercises"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="120"
+                        android:textColor="#212121"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
     </GridLayout>
-
-    <TextView
-        android:id="@+id/caloriesTextView"
-        android:text="Calories -"
-        android:layout_marginBottom="32dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/sleepHoursTextView"
-        android:text="Sleep Hours -"
-        android:layout_marginBottom="32dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/waterConsumptionTextView"
-        android:text="Water Consumption -"
-        android:layout_marginBottom="32dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/bmiTextView"
-        android:text="BMI -"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
 </LinearLayout>

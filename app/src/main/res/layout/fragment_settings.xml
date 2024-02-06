@@ -1,46 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@android:color/transparent">
 
+    <!-- Settings Title -->
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Profile Settings"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginBottom="20dp" />
+        android:text="Settings"
+        android:padding="16dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="start"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Settings Panel with Rounded Background -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Name: Yway Chit Aung"
-        android:layout_marginBottom="20dp" />
+        android:orientation="vertical"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:background="@drawable/rounded_background">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Age: 25"
-        android:layout_marginBottom="20dp" />
+        <!-- Profile -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weight: 130 lbs"
-        android:layout_marginBottom="40dp" />
+            <ImageView
+                android:id="@+id/iconProfile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_person"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Notification Settings"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginBottom="20dp" />
+            <TextView
+                android:id="@+id/profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:text="Profile"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"/>
+        </RelativeLayout>
 
-    <Switch
-        android:id="@+id/switch_push_notification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Push Notification" />
+        <!-- Goals -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:id="@+id/relativeLayoutGoals">
 
+            <ImageView
+                android:id="@+id/iconGoals"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_target"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"/>
+
+            <TextView
+                android:id="@+id/goals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="32dp"
+                android:text="Goals"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
 </LinearLayout>

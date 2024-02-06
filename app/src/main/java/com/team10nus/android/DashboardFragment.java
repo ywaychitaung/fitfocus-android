@@ -5,12 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import okhttp3.Call;
@@ -27,9 +29,7 @@ public class DashboardFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public DashboardFragment() {
-        // Required empty public constructor
-    }
+    public DashboardFragment() {}
 
     public static DashboardFragment newInstance(String param1, String param2) {
         DashboardFragment fragment = new DashboardFragment();
@@ -47,6 +47,7 @@ public class DashboardFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        fetchUserDetails();
         fetchFitnessMetrics();
     }
 
@@ -54,6 +55,56 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
+    }
+
+    private void fetchUserDetails() {
+        // Use SSLHelper to get a custom OkHttpClient instance
+        OkHttpClient client = SSLHelper.getUnsafeOkHttpClient(getContext()); // Use getContext() to get the Context
+
+        String url = "https://10.0.2.2:8080/api/users/show/1";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String result = response.body().string();
+
+                    try {
+                        // Parse the JSON response
+                        JSONObject jsonObject = new JSONObject(result);
+                        final String firstName = jsonObject.getString("firstName");
+                        final String lastName = jsonObject.getString("lastName");
+
+                        // Update UI on the main thread
+                        if (getActivity() != null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Make sure getView() is not null
+                                    View view = getView();
+                                    if (view != null) {
+                                        TextView nameTextView = view.findViewById(R.id.nameTextView);
+                                        nameTextView.setText(firstName + " " + lastName);
+                                    }
+                                }
+                            });
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     private void fetchFitnessMetrics() {
@@ -88,6 +139,9 @@ public class DashboardFragment extends Fragment {
                         final int sleepHours = jsonObject.getInt("sleepHours");
                         final int waterConsumption = jsonObject.getInt("waterConsumption");
                         final int meditationDuration = jsonObject.getInt("meditationDuration");
+                        final double bmi = jsonObject.getDouble("bmi");
+                        final double foodCaloriesConsumed = jsonObject.getDouble("foodCaloriesConsumed");
+                        final double exerciseCaloriesBurned = jsonObject.getDouble("exerciseCaloriesBurned");
 
                         // Update UI on the main thread
                         if (getActivity() != null) {
@@ -99,10 +153,20 @@ public class DashboardFragment extends Fragment {
                                     if (view != null) {
                                         TextView sleepHoursTextView = view.findViewById(R.id.sleepHoursTextView);
                                         TextView waterConsumptionTextView = view.findViewById(R.id.waterConsumptionTextView);
+                                        TextView bmiTextView = view.findViewById(R.id.bmiTextView);
+                                        TextView foodCaloriesConsumedTextView = view.findViewById(R.id.foodCaloriesConsumedTextView);
+                                        TextView exerciseCaloriesBurnedTextView = view.findViewById(R.id.exerciseCaloriesBurnedTextView);
+                                        ProgressBar caloriesProgressBar = view.findViewById(R.id.caloriesProgressBar);
+                                        TextView caloriesProgressBarTextView = view.findViewById(R.id.caloriesProgressTextView);
 
-                                        sleepHoursTextView.setText(getString(R.string.sleep_hours, sleepHours));
-                                        waterConsumptionTextView.setText(getString(R.string.water_consumption, waterConsumption));
+                                        sleepHoursTextView.setText(String.valueOf(sleepHours + " hours"));
+                                        waterConsumptionTextView.setText(String.valueOf(waterConsumption + " liters"));
+                                        bmiTextView.setText(String.valueOf(bmi));
+                                        foodCaloriesConsumedTextView.setText(String.valueOf(foodCaloriesConsumed));
+                                        exerciseCaloriesBurnedTextView.setText(String.valueOf(exerciseCaloriesBurned));
 
+                                        caloriesProgressBar.setProgress((int) (exerciseCaloriesBurned / foodCaloriesConsumed * 100));
+                                        caloriesProgressBarTextView.setText(exerciseCaloriesBurned + "/" + foodCaloriesConsumed);
                                     }
                                 }
                             });
@@ -119,8 +183,8 @@ public class DashboardFragment extends Fragment {
     private void updateUI(String data) {
         View view = getView();
         if (view != null) {
-            TextView sleepHoursTextView = view.findViewById(R.id.sleepHoursTextView);
-            sleepHoursTextView.setText("Hours"); // Modify this line as needed to display your data
+//            TextView sleepHoursTextView = view.findViewById(R.id.sleepHoursTextView);
+//            sleepHoursTextView.setText("Hours"); // Modify this line as needed to display your data
         }
     }
 }
