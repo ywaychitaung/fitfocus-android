@@ -72,6 +72,8 @@ public class SettingsFragment extends Fragment {
         // Find the Goals RelativeLayout by its ID
         RelativeLayout goalsItem = view.findViewById(R.id.relativeLayoutGoals); // Ensure you have an ID set for the RelativeLayout
 
+        RelativeLayout relativeAboutUs = view.findViewById(R.id.relativeAboutUs);
+
         // Set the OnClickListener
         goalsItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +82,18 @@ public class SettingsFragment extends Fragment {
                 if (getActivity() != null) {
                     // Create an Intent to start the GoalsActivity
                     Intent intent = new Intent(getActivity(), GoalsActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        relativeAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Make sure the Activity is available before using it
+                if (getActivity() != null) {
+                    // Create an Intent to start the AboutUsActivity
+                    Intent intent = new Intent(getActivity(), AboutUsActivity.class);
                     startActivity(intent);
                 }
             }
