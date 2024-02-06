@@ -1,21 +1,18 @@
-package com.team10nus.android;
-
-import android.Manifest;
+package com.team10nus.android.fragment;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
+
+import com.team10nus.android.R;
+import com.team10nus.android.activity.AboutUsActivity;
+import com.team10nus.android.activity.GoalsActivity;
 
 /**
  * A simple {@link Fragment} subclass.

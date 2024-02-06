@@ -1,4 +1,4 @@
-package com.team10nus.android;
+package com.team10nus.android.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,6 +6,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
+import com.team10nus.android.fragment.DashboardFragment;
+import com.team10nus.android.fragment.FoodsFragment;
+import com.team10nus.android.fragment.GymEquipmentsFragment;
+import com.team10nus.android.R;
+import com.team10nus.android.fragment.SettingsFragment;
 import com.team10nus.android.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

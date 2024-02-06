@@ -1,4 +1,4 @@
-package com.team10nus.android;
+package com.team10nus.android.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.team10nus.android.R;
+import com.team10nus.android.utility.SSLHelper;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import okhttp3.Call;

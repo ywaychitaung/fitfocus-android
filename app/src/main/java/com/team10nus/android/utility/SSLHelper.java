@@ -1,6 +1,8 @@
-package com.team10nus.android;
+package com.team10nus.android.utility;
 
 import android.content.Context;
+
+import com.team10nus.android.R;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;

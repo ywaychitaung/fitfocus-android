@@ -1,8 +1,10 @@
-package com.team10nus.android;
+package com.team10nus.android.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.team10nus.android.R;
 
 public class AboutUsActivity extends AppCompatActivity {
 

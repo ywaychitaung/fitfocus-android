@@ -1,6 +1,7 @@
-package com.team10nus.android;
+package com.team10nus.android.fragment;
 
 import android.Manifest;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -15,12 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.team10nus.android.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FoodsFragment#newInstance} factory method to
+ * Use the {@link GymEquipmentsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FoodsFragment extends Fragment {
+public class GymEquipmentsFragment extends Fragment {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_CAMERA_PERMISSION = 2;
 
@@ -33,7 +36,7 @@ public class FoodsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FoodsFragment() {
+    public GymEquipmentsFragment() {
         // Required empty public constructor
     }
 
@@ -43,11 +46,11 @@ public class FoodsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FoodFragment.
+     * @return A new instance of fragment ExerciseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FoodsFragment newInstance(String param1, String param2) {
-        FoodsFragment fragment = new FoodsFragment();
+    public static GymEquipmentsFragment newInstance(String param1, String param2) {
+        GymEquipmentsFragment fragment = new GymEquipmentsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,7 +71,7 @@ public class FoodsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_foods, container, false);
+        return inflater.inflate(R.layout.fragment_gym_equipments, container, false);
     }
 
     @Override
@@ -85,7 +88,7 @@ public class FoodsFragment extends Fragment {
     }
 
     private void requestCamera() {
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA)
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
         } else {
