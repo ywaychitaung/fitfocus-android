@@ -32,6 +32,9 @@ public class GoalsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goals);
 
+        fetchGoals();
+        fetchFitnessMetrics();
+
         Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,7 +43,13 @@ public class GoalsActivity extends AppCompatActivity {
             }
         });
 
-        fetchGoals();
+        Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitFitnessMetrics();
+            }
+        });
     }
 
     private void fetchGoals() {
@@ -87,6 +96,58 @@ public class GoalsActivity extends AppCompatActivity {
         });
     }
 
+    private void fetchFitnessMetrics() {
+        // Use SSLHelper to get a custom OkHttpClient instance
+        OkHttpClient client = SSLHelper.getUnsafeOkHttpClient(getApplicationContext());
+
+        String url = "https://10.0.2.2:8080/api/fitness-metrics/show/1";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String result = response.body().string();
+
+                    try {
+                        // Parse the JSON response
+                        JSONObject jsonObject = new JSONObject(result);
+                        int sleepHours = jsonObject.getInt("sleepHours");
+                        int waterConsumption = jsonObject.getInt("waterConsumption");
+                        double weight = jsonObject.getDouble("weight");
+                        double height = jsonObject.getDouble("height");
+
+                        // Update the UI on the main thread
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                EditText sleepHoursEditText = findViewById(R.id.sleepHoursEditText);
+                                EditText waterConsumptionEditText = findViewById(R.id.waterConsumptionEditText);
+                                EditText weightEditText = findViewById(R.id.weightEditText);
+                                EditText heightEditText = findViewById(R.id.heightEditText);
+
+                                sleepHoursEditText.setText(String.valueOf(sleepHours));
+                                waterConsumptionEditText.setText(String.valueOf(waterConsumption));
+                                weightEditText.setText(String.valueOf(weight));
+                                heightEditText.setText(String.valueOf(height));
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
     private void submitGoals() {
         EditText goalWeightEditText = findViewById(R.id.goalWeightEditText); // Replace with your EditText's ID
         String newGoalWeight = goalWeightEditText.getText().toString();
@@ -107,6 +168,67 @@ public class GoalsActivity extends AppCompatActivity {
             }
 
             String url = "https://10.0.2.2:8080/api/users/goals/update/1";
+            RequestBody body = RequestBody.create(JSON, json.toString());
+            Request request = new Request.Builder()
+                    .url(url)
+                    .put(body)
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    // Log the error or handle the failure
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    // Handle the successful response
+                    if (response.isSuccessful()) {
+                        // Existing code to handle the response
+                        Intent intent = new Intent(GoalsActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+        } else {
+            // Handle case where no new goal weight is entered
+        }
+    }
+
+    private void submitFitnessMetrics() {
+        EditText sleepHoursEditText = findViewById(R.id.sleepHoursEditText);
+        EditText waterConsumptionEditText = findViewById(R.id.waterConsumptionEditText);
+        EditText weightEditText = findViewById(R.id.weightEditText);
+        EditText heightEditText = findViewById(R.id.heightEditText);
+
+        String newSleepHours = sleepHoursEditText.getText().toString();
+        String newWaterConsumption = waterConsumptionEditText.getText().toString();
+        String newWeight = weightEditText.getText().toString();
+        String newHeight = heightEditText.getText().toString();
+
+        if (!newSleepHours.isEmpty()) {
+            int sleepHoursValue = Integer.parseInt(newSleepHours);
+            int waterConsumptionValue = Integer.parseInt(newWaterConsumption);
+            double weightValue = Double.parseDouble(newWeight);
+            double heightValue = Double.parseDouble(newHeight);
+
+            OkHttpClient client = SSLHelper.getUnsafeOkHttpClient(getApplicationContext());
+
+            // Modify this if your API requires a different format
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject json = new JSONObject();
+            try {
+                json.put("fitnessMetricsId", 1);
+                json.put("sleepHours", sleepHoursValue);
+                json.put("waterConsumption", waterConsumptionValue);
+                json.put("weight", weightValue);
+                json.put("height", heightValue);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            String url = "https://10.0.2.2:8080/api/fitness-metrics/update/1";
             RequestBody body = RequestBody.create(JSON, json.toString());
             Request request = new Request.Builder()
                     .url(url)

@@ -113,7 +113,7 @@ public class DashboardFragment extends Fragment {
         // Use SSLHelper to get a custom OkHttpClient instance
         OkHttpClient client = SSLHelper.getUnsafeOkHttpClient(getContext()); // Use getContext() to get the Context
 
-        String url = "https://10.0.2.2:8080/api/fitness-metrics/1"; // Ensure this URL is reachable from your device
+        String url = "https://10.0.2.2:8080/api/fitness-metrics/show/1"; // Ensure this URL is reachable from your device
 
         Request request = new Request.Builder()
                 .url(url)
