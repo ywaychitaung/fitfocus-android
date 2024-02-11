@@ -1,5 +1,6 @@
 package com.team10nus.android.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.team10nus.android.R;
+import com.team10nus.android.activity.SleepActivity;
 import com.team10nus.android.utility.SSLHelper;
 
 import org.json.JSONException;
@@ -56,7 +59,19 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+        CardView sleepCardView = view.findViewById(R.id.sleepCardView);
+        sleepCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle click event
+                Intent intent = new Intent(getContext(), SleepActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return view;
     }
 
     private void fetchUserDetails() {
