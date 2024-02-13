@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context=".activity.WaterConsumptionActivity">
 
     <TextView
-        android:id="@+id/sleepTitle"
+        android:id="@+id/waterTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Sleep"
+        android:text="Water Consumption"
         android:textSize="24dp"
         android:textStyle="bold" />
 
     <FrameLayout
-        android:id="@+id/progressContainer"
+        android:id="@+id/progressContainer2"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerInParent="true">
 
         <ProgressBar
-            android:id="@+id/circle_progress_bar"
+            android:id="@+id/circle_progress_bar2"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,15 +31,15 @@
             android:progressDrawable="@drawable/circular_progress_bar" />
 
         <ImageView
-            android:id="@+id/progress_icon"
+            android:id="@+id/progress_icon2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="32dp"
-            android:src="@drawable/icon_sleep" />
+            android:src="@drawable/icon_water" />
 
         <TextView
-            android:id="@+id/sleepHours"
+            android:id="@+id/waterConsumptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -47,12 +49,12 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/goalSleepHours"
+            android:id="@+id/goalWaterConsumption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:text="Total Sleep"
+            android:text="Total Water Consumption"
             android:textSize="16dp" />
     </FrameLayout>
 
@@ -66,7 +68,7 @@
         android:layout_marginTop="120dp">
 
         <EditText
-            android:id="@+id/editTextSleepHours"
+            android:id="@+id/editTextWaterConsumption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -77,12 +79,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Hours" />
+            android:text="Liters" />
 
     </com.google.android.flexbox.FlexboxLayout>
 
     <Button
-        android:id="@+id/updateSleepButton"
+        android:id="@+id/updateWaterConsumptionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

@@ -14,38 +14,37 @@ import android.widget.TextView;
 import com.team10nus.android.R;
 import com.team10nus.android.utility.ApiService;
 
+import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-
-import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class SleepActivity extends AppCompatActivity {
+public class WaterConsumptionActivity extends AppCompatActivity {
     private int sleepHours = 0;
     private int waterConsumption = 0;
 
     private double weight = 0;
     private double height = 0;
 
-    private ApiService apiService; // Declare ApiService
+    private ApiService apiService; // ApiService instance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sleep);
+        setContentView(R.layout.activity_water_consumption);
 
         apiService = new ApiService(this); // Initialize ApiService
 
-        Button updateSleepButton = findViewById(R.id.updateSleepButton);
-        ProgressBar progressBar = findViewById(R.id.circle_progress_bar);
+        Button updateWaterConsumptionButton = findViewById(R.id.updateWaterConsumptionButton);
+        ProgressBar progressBar = findViewById(R.id.circle_progress_bar2);
 
-        updateSleepButton.setOnClickListener(new View.OnClickListener() {
+        updateWaterConsumptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateSleepHours();
+                updateWaterConsumption();
+
                 progressBar.setVisibility(View.VISIBLE);
                 fetchFitnessMetrics();
                 progressBar.setVisibility(View.GONE);
@@ -60,14 +59,15 @@ public class SleepActivity extends AppCompatActivity {
 
         apiService.get(url, new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
                 e.printStackTrace();
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull okhttp3.Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String result = response.body().string();
+
                     try {
                         JSONObject jsonObject = new JSONObject(result);
 
@@ -90,15 +90,15 @@ public class SleepActivity extends AppCompatActivity {
         });
     }
 
-    private void updateSleepHours() {
-        EditText editTextSleepHours = findViewById(R.id.editTextSleepHours);
-        int sleepHoursInt = Integer.parseInt(editTextSleepHours.getText().toString());
+    private void updateWaterConsumption() {
+        EditText editTextWaterConsumption = findViewById(R.id.editTextWaterConsumption);
+        int waterConsumptionInt = Integer.parseInt(editTextWaterConsumption.getText().toString());
 
         JSONObject json = new JSONObject();
         try {
             json.put("fitnessMetricsId", 1);
-            json.put("sleepHours", sleepHoursInt);
-            json.put("waterConsumption", waterConsumption);
+            json.put("sleepHours", sleepHours);
+            json.put("waterConsumption", waterConsumptionInt);
             json.put("height", height);
             json.put("weight", weight);
         } catch (JSONException e) {
@@ -109,17 +109,17 @@ public class SleepActivity extends AppCompatActivity {
 
         apiService.put(url, json, new Callback() {
             @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+            public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
                 e.printStackTrace();
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull okhttp3.Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Intent intent = new Intent(SleepActivity.this, MainActivity.class);
+                            Intent intent = new Intent(WaterConsumptionActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
                     });
@@ -129,10 +129,10 @@ public class SleepActivity extends AppCompatActivity {
     }
 
     private void updateUI() {
-        TextView sleepHoursTextView = findViewById(R.id.sleepHours);
-        sleepHoursTextView.setText(sleepHours + " hours");
+        TextView waterConsumptionTextView = findViewById(R.id.waterConsumptionTextView);
+        waterConsumptionTextView.setText(waterConsumption + " liters");
 
-        EditText editTextSleepHours = findViewById(R.id.editTextSleepHours);
-        editTextSleepHours.setText(String.valueOf(sleepHours));
+        EditText editTextWaterConsumption = findViewById(R.id.editTextWaterConsumption);
+        editTextWaterConsumption.setText(String.valueOf(waterConsumption));
     }
 }

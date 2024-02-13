@@ -1,28 +1,31 @@
 package com.team10nus.android.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.team10nus.android.R;
-import com.team10nus.android.utility.SSLHelper;
+import com.team10nus.android.utility.ApiService;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private ApiService apiService;
+
     EditText email;
     EditText password;
 
@@ -31,7 +34,19 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if user is already logged in
+        if (isUserLoggedIn()) {
+            // User is already logged in, redirect to MainActivity
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish(); // Finish LoginActivity so user can't go back to it with the back button
+            return; // Don't proceed to setContentView, as we're redirecting
+        }
+
         setContentView(R.layout.activity_login);
+
+        apiService = new ApiService(this);
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -48,68 +63,58 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void userLogin(String email, String password) {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("email", email);
+            jsonBody.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        OkHttpClient client = SSLHelper.getUnsafeOkHttpClient(LoginActivity.this);
-
-        // Building the request body
-        String formBody = "email=" + encodeURIComponent(email) +
-                "&password=" + encodeURIComponent(password);
-
-        RequestBody body = RequestBody.create(formBody, MediaType.parse("application/x-www-form-urlencoded"));
-
-        Request request = new Request.Builder()
-                .url("https://10.0.2.2:8080/api/auth/login") // Use 10.0.2.2 for Android emulator
-                .post(body)
-                .build();
-
-
-        new Thread(new Runnable() {
+        apiService.post("https://10.0.2.2:8080/api/auth/login", jsonBody, new Callback() {
             @Override
-            public void run() {
-                try (Response response = client.newCall(request).execute()) {
-                    if (response.isSuccessful()) {
-                        String responseData = response.body().string();
-                        // Handle the response on the UI thread
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Update your UI here based on responseData
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-                    } else {
-                        // Handle the error on the UI thread
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Update your UI here to show error
-                            }
-                        });
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                // Handle failure
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                // Handle response
+                if (response.isSuccessful()) {
+                    // get response body
+                    String responseBody = response.body().string();
+                    try {
+                        JSONObject jsonObject = new JSONObject(responseBody);
+                        String userId = jsonObject.getString("userId");
+
+                        saveLoginInformation(userId, true);
+
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    // Optionally handle the exception on the UI thread
                 }
             }
-        }).start();
+        });
     }
 
-    // Helper method to URL-encode strings
-    private String encodeURIComponent(String s) {
-        try {
-            return URLEncoder.encode(s, "UTF-8")
-                    .replaceAll("\\+", "%20")
-                    .replaceAll("\\%21", "!")
-                    .replaceAll("\\%27", "'")
-                    .replaceAll("\\%28", "(")
-                    .replaceAll("\\%29", ")")
-                    .replaceAll("\\%7E", "~");
-        } catch (UnsupportedEncodingException e) {
-            Log.e("Encoding Error", "Error encoding parameter", e);
-            return null;
-        }
+    private void saveLoginInformation(String userId, boolean isLoggedIn) {
+        // Get SharedPreferences object
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPref", MODE_PRIVATE);
+        // Get an Editor object
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Put key-value pairs
+        editor.putString("userId", userId); // Example: save user ID
+        editor.putBoolean("isLoggedIn", isLoggedIn); // Example: save login state
+
+        // Commit changes
+        editor.apply(); // or editor.commit() for synchronous save
+    }
+
+    private boolean isUserLoggedIn() {
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPref", MODE_PRIVATE);
+        return sharedPreferences.getBoolean("isLoggedIn", false);
     }
 }

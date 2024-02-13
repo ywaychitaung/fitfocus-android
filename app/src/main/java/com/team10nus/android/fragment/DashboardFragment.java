@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.team10nus.android.R;
 import com.team10nus.android.activity.SleepActivity;
+import com.team10nus.android.activity.WaterConsumptionActivity;
 import com.team10nus.android.utility.SSLHelper;
 
 import org.json.JSONException;
@@ -62,11 +63,22 @@ public class DashboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         CardView sleepCardView = view.findViewById(R.id.sleepCardView);
+        CardView waterCardView = view.findViewById(R.id.waterCardView);
+
         sleepCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Handle click event
                 Intent intent = new Intent(getContext(), SleepActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        waterCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle click event
+                Intent intent = new Intent(getContext(), WaterConsumptionActivity.class);
                 startActivity(intent);
             }
         });

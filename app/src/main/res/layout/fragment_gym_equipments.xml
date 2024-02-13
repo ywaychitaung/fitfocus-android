@@ -28,11 +28,4 @@
         app:layout_constraintTop_toBottomOf="@id/image_gym_equipments"
         app:layout_constraintVertical_bias="0.113" />
 
-    <Button
-        android:id="@+id/btnSelectImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Image"
-        tools:ignore="MissingConstraints" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
