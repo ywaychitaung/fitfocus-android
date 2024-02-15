@@ -26,7 +26,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class FoodActivity extends AppCompatActivity {
+public class GymActivity extends AppCompatActivity {
+
     // A constant to track the request code of the image capture activity
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -126,4 +127,5 @@ public class FoodActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 }

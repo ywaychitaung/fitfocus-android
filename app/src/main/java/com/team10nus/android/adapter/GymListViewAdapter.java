@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.team10nus.android.R;
 
-public class CustomAdapter extends ArrayAdapter<String> {
+public class GymListViewAdapter extends ArrayAdapter<String> {
 
-    public CustomAdapter(Context context, String[] items) {
+    public GymListViewAdapter(Context context, String[] items) {
         super(context, R.layout.list_item, items);
     }
 
@@ -30,4 +30,3 @@ public class CustomAdapter extends ArrayAdapter<String> {
         return view;
     }
 }
-

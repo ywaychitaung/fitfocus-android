@@ -1,25 +1,20 @@
 package com.team10nus.android.fragment;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.team10nus.android.R;
 import com.team10nus.android.activity.FoodActivity;
-import com.team10nus.android.adapter.CustomAdapter;
+import com.team10nus.android.adapter.FoodListViewAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,7 +82,7 @@ public class FoodsFragment extends Fragment {
 
         // Initialize your ListView here
         listView = view.findViewById(R.id.listView);
-        CustomAdapter adapter = new CustomAdapter(getActivity(), items);
+        FoodListViewAdapter adapter = new FoodListViewAdapter(getActivity(), items);
         listView.setAdapter(adapter);
 
         // Set the item click listener

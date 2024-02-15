@@ -14,9 +14,13 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.team10nus.android.R;
+import com.team10nus.android.activity.FoodActivity;
+import com.team10nus.android.adapter.FoodListViewAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +30,9 @@ import com.team10nus.android.R;
 public class GymEquipmentsFragment extends Fragment {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_CAMERA_PERMISSION = 2;
+
+    ListView listView;
+    String[] items = { "Add exercise" };
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -78,41 +85,21 @@ public class GymEquipmentsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button button = view.findViewById(R.id.button_foods_camera);
-        button.setOnClickListener(new View.OnClickListener() {
+        // Initialize your ListView here
+        listView = view.findViewById(R.id.listView);
+        FoodListViewAdapter adapter = new FoodListViewAdapter(getActivity(), items);
+        listView.setAdapter(adapter);
+
+        // Set the item click listener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                requestCamera();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Start a new activity when an item is clicked
+                // You can use position to start different activities for each item
+                Intent intent = new Intent(getActivity(), FoodActivity.class);
+                intent.putExtra("ITEM_KEY", items[position]); // Optional: pass data to the new activity
+                startActivity(intent);
             }
         });
-    }
-
-    private void requestCamera() {
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
-        } else {
-            openCamera();
-        }
-    }
-
-    private void openCamera() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera();
-            } else {
-                // Handle permission denial...
-            }
-        }
     }
 }

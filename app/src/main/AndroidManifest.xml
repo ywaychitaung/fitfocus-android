@@ -21,6 +21,9 @@
         android:theme="@style/Theme.Android"
         tools:targetApi="31">
         <activity
+            android:name=".activity.GymActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ScanFoodActivity"
             android:exported="false" />
         <activity
